@@ -1,0 +1,44 @@
+[tool.poetry]
+name = "fastapi-react app"
+version = "0.1.0"
+description = ""
+authors = ["Lius <morarolivio@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.111.0"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.4.2"
+pre-commit = "^3.7.1"
+isort = "^5.13.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+#------------------------------------------------
+[tool.black]
+target-version = ['py312']
+line-length = 79
+include = '\.pyi?$'
+exclude = '''
+    /(
+        \.git
+      | \.hg
+      | \.mypy_cache
+      | \.tox
+      | \.venv
+      | _build
+      | buck-out
+      | build
+      | dist
+
+      # The following are specific to Black, you probably don't want those.
+      | blib2to3
+      | tests/data
+    )/'''
+
+[tool.isort]
+profile = "black"
