@@ -21,5 +21,7 @@ class Config:
 
     cmc_http_client = CMSHTTPClientConfig()
 
+    vite_port: str = env.str("VITE_PORT")
+
 
 config = Config()

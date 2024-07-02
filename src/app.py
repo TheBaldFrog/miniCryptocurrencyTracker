@@ -1,9 +1,11 @@
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from loguru import logger
 
 from src.api.v1.routers import cryptocurrencies
+from src.config import config
 from src.dependencies.cmc_http_client import start_cmc_http_client, stop_cmc_http_client
 
 
@@ -19,6 +21,20 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="FastAPI React App", lifespan=lifespan)
 app.include_router(cryptocurrencies)
+
+
+origins = [
+    "http://localhost",
+    f"http://localhost:{config.vite_port}",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")
