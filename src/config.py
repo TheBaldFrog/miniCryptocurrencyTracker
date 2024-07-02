@@ -1,3 +1,5 @@
+from dataclasses import dataclass
+
 from environs import Env
 
 env = Env()
@@ -5,5 +7,19 @@ env = Env()
 env.read_env()
 
 
-class Settings:
-    CMC_API_KEY = env.str("CMC_API_KEY")
+@dataclass(frozen=True)
+class CMSHTTPClientConfig:
+    """CMSHTTPClient Configuration"""
+
+    base_url: str = "https://pro-api.coinmarketcap.com"
+    cmc_api_key: str = env.str("CMC_API_KEY")
+
+
+@dataclass
+class Config:
+    """All in one configuration class"""
+
+    cmc_http_client = CMSHTTPClientConfig()
+
+
+config = Config()
