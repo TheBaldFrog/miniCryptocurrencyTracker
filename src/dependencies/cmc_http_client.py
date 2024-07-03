@@ -1,7 +1,7 @@
 from async_lru import alru_cache
 from loguru import logger
 
-from src.config import config
+from src.core.config import config
 from src.dependencies.http_client import HTTPClient
 
 

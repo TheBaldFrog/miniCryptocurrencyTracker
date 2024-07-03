@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from loguru import logger
 
 from src.api.v1.routers import cryptocurrencies
-from src.config import config
+from src.core.config import config
 from src.dependencies.cmc_http_client import start_cmc_http_client, stop_cmc_http_client
 
 
