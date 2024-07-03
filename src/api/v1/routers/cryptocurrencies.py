@@ -15,7 +15,7 @@ async def get_cryptocurrencies(
     return await cmc_client.get_listings()
 
 
-@cryptocurrencies.get("/cryptocurrencies/{currency_id}")
+@cryptocurrencies.get("/{currency_id}")
 async def get_cryptocurrency(
     currency_id: int, cmc_client: Annotated[CMSHTTPClient, Depends(get_cmc_client)]
 ):
