@@ -6,7 +6,7 @@ from src.dependencies.cmc_http_client import CMSHTTPClient
 from src.dependencies.dependencies import get_cmc_client
 from src.schemas import Cryptocurrency
 
-cryptocurrencies = APIRouter(prefix="/cryptocurrencies", tags=["cryptocurrencies"])
+cryptocurrencies = APIRouter(prefix="/cryptocurrencies", tags=["Cryptocurrencies"])
 
 
 @cryptocurrencies.get("/")
