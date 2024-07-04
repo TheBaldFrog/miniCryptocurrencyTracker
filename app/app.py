@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from loguru import logger
 
-from app.api.v1.routers import cryptocurrencies, user
+from app.api.v1.routers import cryptocurrencies
 from app.core.config import config
 from app.services.coinmarketcap.cmc_http_client import (
     start_cmc_http_client,
@@ -28,7 +28,6 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="FastAPI React App", lifespan=lifespan)
 app.include_router(cryptocurrencies)
-app.include_router(user)
 
 
 origins = [
