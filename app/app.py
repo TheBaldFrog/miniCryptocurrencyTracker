@@ -4,9 +4,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from loguru import logger
 
-from src.api.v1.routers import cryptocurrencies, user
-from src.core.config import config
-from src.services.coinmarketcap.cmc_http_client import (
+from app.api.v1.routers import cryptocurrencies, user
+from app.core.config import config
+from app.services.coinmarketcap.cmc_http_client import (
     start_cmc_http_client,
     stop_cmc_http_client,
 )

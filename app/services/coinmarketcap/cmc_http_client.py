@@ -1,8 +1,8 @@
 from async_lru import alru_cache
 from loguru import logger
 
-from src.core.config import config
-from src.services.coinmarketcap.http_client import HTTPClient
+from app.core.config import config
+from app.services.coinmarketcap.http_client import HTTPClient
 
 
 class CMSHTTPClient(HTTPClient):
