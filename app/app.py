@@ -6,7 +6,7 @@ from loguru import logger
 
 from app.api.v1.routers import cryptocurrencies
 from app.core.config import config
-from app.services.coinmarketcap.cmc_http_client import (
+from app.service.coinmarketcap.cmc_http_client import (
     start_cmc_http_client,
     stop_cmc_http_client,
 )

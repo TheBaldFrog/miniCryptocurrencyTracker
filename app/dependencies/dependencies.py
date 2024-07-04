@@ -1,4 +1,4 @@
-from app.services.coinmarketcap.cmc_http_client import (
+from app.service.coinmarketcap.cmc_http_client import (
     CMSHTTPClient,
     CMSHTTPClientSingletonWrapper,
 )

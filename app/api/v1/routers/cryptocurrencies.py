@@ -3,8 +3,8 @@ from typing import Annotated
 from fastapi import APIRouter, Depends
 
 from app.dependencies.dependencies import get_cmc_client
-from app.schemas.cryptocurrency import Cryptocurrency
-from app.services.coinmarketcap.cmc_http_client import CMSHTTPClient
+from app.dto.schema.cryptocurrency import Cryptocurrency
+from app.service.coinmarketcap.cmc_http_client import CMSHTTPClient
 
 cryptocurrencies = APIRouter(prefix="/cryptocurrencies", tags=["Cryptocurrencies"])
 
