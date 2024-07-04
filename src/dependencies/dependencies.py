@@ -1,4 +1,4 @@
-from src.dependencies.cmc_http_client import (
+from src.services.coinmarketcap.cmc_http_client import (
     CMSHTTPClient,
     CMSHTTPClientSingletonWrapper,
 )
