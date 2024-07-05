@@ -6,6 +6,7 @@ from loguru import logger
 
 from app.api.v1.routers import cryptocurrencies
 from app.core.config import config
+from app.core.database import async_db_manager
 from app.service.coinmarketcap.cmc_http_client import (
     start_cmc_http_client,
     stop_cmc_http_client,
@@ -14,19 +15,24 @@ from app.service.coinmarketcap.cmc_http_client import (
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Load the ML model
+    # Start Up
     logger.info("on_start_up")
 
     start_cmc_http_client()
     logger.debug("start_cmc_http_client")
     yield
+    # Shutdown
     logger.info("on_shutdown")
 
     await stop_cmc_http_client()
     logger.debug("stop_cmc_http_client")
 
+    if not async_db_manager.is_closed():
+        await async_db_manager.close()
+        logger.debug("Close the DB connection")
 
-app = FastAPI(title="FastAPI React App", lifespan=lifespan)
+
+app = FastAPI(title=config.project_name, lifespan=lifespan)
 app.include_router(cryptocurrencies)
 
 

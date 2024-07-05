@@ -45,6 +45,8 @@ class CMSHTTPClientConfig:
 class Config:
     """All in one configuration class"""
 
+    project_name: str = "FastAPI React App"
+
     cmc_http_client = CMSHTTPClientConfig()
     database = DatabaseConfig()
 
