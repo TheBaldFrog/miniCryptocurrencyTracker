@@ -4,8 +4,8 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.dependencies.dependencies import get_cmc_client, get_db
-from app.dto.model import User
-from app.dto.schema.cryptocurrency import Cryptocurrency
+from app.dto.model.user import User
+from app.dto.schema.cryptocurrency import CryptocurrencySchema
 from app.service.coinmarketcap.cmc_http_client import CMSHTTPClient
 
 cryptocurrencies = APIRouter(prefix="/cryptocurrencies", tags=["Cryptocurrencies"])
@@ -14,22 +14,22 @@ cryptocurrencies = APIRouter(prefix="/cryptocurrencies", tags=["Cryptocurrencies
 @cryptocurrencies.get("/")
 async def get_cryptocurrencies(
     cmc_client: Annotated[CMSHTTPClient, Depends(get_cmc_client)]
-) -> list[Cryptocurrency]:
+) -> list[CryptocurrencySchema]:
     return await cmc_client.get_listings()
 
 
 @cryptocurrencies.get("/{currency_id}")
 async def get_cryptocurrency(
     currency_id: int, cmc_client: Annotated[CMSHTTPClient, Depends(get_cmc_client)]
-) -> Cryptocurrency:
+) -> CryptocurrencySchema:
     return await cmc_client.get_currencies(currency_id)
 
 
 @cryptocurrencies.get("/testdb/")
 async def get_testdb(db: AsyncSession = Depends(get_db)):
     db_user = User(
-        username="fs5",
-        email="qw5",
+        username="fs7",
+        email="qw7",
         first_name="fdsf",
         last_name="sdfsdf",
         hashed_password="fsdfsddsfsdfsdfd",

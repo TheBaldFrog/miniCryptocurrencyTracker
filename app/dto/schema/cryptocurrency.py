@@ -11,7 +11,7 @@ class Quote(BaseModel):
     USD: USD
 
 
-class Cryptocurrency(BaseModel):
+class CryptocurrencySchema(BaseModel):
     cmc_rank: int = Field(examples=["1"])
     id: int = Field(examples=["1"])
     name: str = Field(examples=["Bitcoin"])
