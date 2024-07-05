@@ -4,10 +4,10 @@ from app.dto.model.base import Base
 from app.dto.model.mixins import TimeMixin
 
 
-class User(Base, TimeMixin):
+class User(TimeMixin, Base):
     __tablename__ = "users"
 
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True, index=True)
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
     username: Mapped[str] = mapped_column(index=True, unique=True)
     email: Mapped[str] = mapped_column(index=True, unique=True)
     first_name: Mapped[str]
