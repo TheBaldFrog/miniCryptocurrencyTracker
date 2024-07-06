@@ -18,12 +18,14 @@ class JWTRepo:
         if expires_delta:
             expire = datetime.utcnow() + expires_delta
         else:
-            expire = datetime.utcnow() + timedelta(minutes=15)
+            expire = datetime.utcnow() + timedelta(
+                minutes=config.authentication.ACCESS_TOKEN_EXPIRE_MINUTES
+            )
 
         to_encode.update({"exp": expire})
         encoded_jwt = jwt.encode(
-            payload=to_encode,
-            key=config.authentication.SECRET_KEY,
+            to_encode,
+            config.authentication.SECRET_KEY,
             algorithm=config.authentication.ALGORITHM,
         )
 
@@ -32,8 +34,8 @@ class JWTRepo:
     def decode_token(self):
         try:
             decoded_token = jwt.decode(
-                token=self.token,
-                key=config.authentication.SECRET_KEY,
+                self.token,
+                config.authentication.SECRET_KEY,
                 algorithms=[config.authentication.ALGORITHM],
             )
             return decoded_token if decoded_token["expires"] >= datetime.time() else None
@@ -43,8 +45,8 @@ class JWTRepo:
     @staticmethod
     def extract_token(token: str):
         return jwt.decode(
-            token=token,
-            key=config.authentication.SECRET_KEY,
+            token,
+            config.authentication.SECRET_KEY,
             algorithms=[config.authentication.ALGORITHM],
         )
 
@@ -67,15 +69,32 @@ class JWTBearer(HTTPBearer):
                         "message": "Invalid authentication schema.",
                     },
                 )
-            if not self.verify_jwt(credentials.credentials):
+            try:
+                if not self.verify_jwt(credentials.credentials):
+                    raise HTTPException(
+                        status_code=403,
+                        detail={
+                            "status": "Forbidden",
+                            "message": "Invalid token or expired token.",
+                        },
+                    )
+                return credentials.credentials
+            except jwt.exceptions.ExpiredSignatureError:
                 raise HTTPException(
                     status_code=403,
                     detail={
                         "status": "Forbidden",
-                        "message": "Invalid token or expired token.",
+                        "message": "Expired token.",
                     },
                 )
-            return credentials.credentials
+            except jwt.exceptions.InvalidTokenError:
+                raise HTTPException(
+                    status_code=403,
+                    detail={
+                        "status": "Forbidden",
+                        "message": "Invalid token.",
+                    },
+                )
         else:
             raise HTTPException(
                 status_code=403,
