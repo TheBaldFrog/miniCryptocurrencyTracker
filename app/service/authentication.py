@@ -1,7 +1,7 @@
 from datetime import datetime
 
+from email_validator import EmailNotValidError, validate_email
 from fastapi import HTTPException
-from loguru import logger
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.dependencies.dependencies import pwd_context
@@ -14,6 +14,14 @@ from app.repository.user import UserRepository
 class AuthService:
     @staticmethod
     async def register_service(register: RegisterSchema, db: AsyncSession):
+        # Validate email
+        try:
+            email_info = validate_email(register.email, check_deliverability=False)
+
+            normalized_email = email_info.normalized
+        except EmailNotValidError:
+            raise HTTPException(status_code=400, detail="Non valid email")
+
         # convert birthdate type from frontend str to date
         birth_date = datetime.strptime(register.birth, "%d-%m-%Y")
         name = register.name.strip().split()
@@ -22,7 +30,7 @@ class AuthService:
 
         _users = User(
             username=register.username,
-            email=register.email,
+            email=normalized_email,
             hashed_password=pwd_context.hash(register.password),
             birth=birth_date,
             first_name=first_name,
