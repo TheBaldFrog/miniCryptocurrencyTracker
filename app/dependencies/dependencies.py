@@ -2,6 +2,7 @@ from typing import Annotated
 
 from fastapi import Depends
 from loguru import logger
+from passlib.context import CryptContext
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import async_db_manager
@@ -35,3 +36,13 @@ async def commit_rollback(db: AsyncSession):
     except Exception:
         await db.rollback()
         raise
+
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+
+# def asdict(obj):
+#     return dict(
+#         (col.name, getattr(obj, col.name))
+#         for col in class_mapper(obj.__class__).mapped_table.c
+#     )

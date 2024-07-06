@@ -48,6 +48,16 @@ class RegisterSchema(BaseModel):
         return v
 
 
+class LoginSchema(BaseModel):
+    username: str
+    password: str
+
+
+class ForgotPasswordSchema(BaseModel):
+    email: str
+    new_password: str
+
+
 # schema = RegisterSchema(
 #     username="dsf",
 #     email="<EMAIL>",

@@ -41,6 +41,15 @@ class CMSHTTPClientConfig:
     cmc_api_key: str = env.str("CMC_API_KEY")
 
 
+@dataclass(frozen=True)
+class AuthenticationConfig:
+    """Authentication Configuration"""
+
+    SECRET_KEY = "d914f2e80d32efc3506c84b2dee1a0a706595c38ef17218e89209983e4135a7c"
+    ALGORITHM = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES = 30
+
+
 @dataclass
 class Config:
     """All in one configuration class"""
@@ -49,6 +58,7 @@ class Config:
 
     cmc_http_client = CMSHTTPClientConfig()
     database = DatabaseConfig()
+    authentication = AuthenticationConfig()
 
     vite_port: str = env.str("VITE_PORT")
 

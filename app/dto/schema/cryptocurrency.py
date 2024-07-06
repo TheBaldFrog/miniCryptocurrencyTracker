@@ -1,4 +1,8 @@
+from typing import TypeVar
+
 from pydantic import BaseModel, Field
+
+T = TypeVar("T")
 
 
 class USD(BaseModel):
@@ -21,4 +25,4 @@ class CryptocurrencySchema(BaseModel):
 
 class ResponseSchema(BaseModel):
     detail: str
-    result: str = None  # !!!! Mod
+    result: T | None = None
