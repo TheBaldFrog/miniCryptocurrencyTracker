@@ -1,5 +1,6 @@
 from datetime import datetime
 
+import phonenumbers
 from email_validator import EmailNotValidError, validate_email
 from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -20,10 +21,21 @@ class AuthService:
 
             normalized_email = email_info.normalized
         except EmailNotValidError:
-            raise HTTPException(status_code=400, detail="Non valid email")
+            raise HTTPException(status_code=400, detail="Non valid email!")
 
-        # convert birthdate type from frontend str to date
-        birth_date = datetime.strptime(register.birth, "%d-%m-%Y")
+        # Validate phonenumbers
+        my_number = phonenumbers.parse(register.phone_number)
+        if not phonenumbers.is_valid_number(my_number):
+            raise HTTPException(status_code=400, detail="Non valid phone number!")
+
+        # Validate birthdate type from frontend str to date
+        try:
+            birth_date = datetime.strptime(register.birth, "%d-%m-%Y")
+        except ValueError:
+            raise HTTPException(
+                status_code=400,
+                detail="Invalid birth, date does not match format '%d-%m-%Y'",
+            )
         name = register.name.strip().split()
         first_name = name[0]
         last_name = name[1]
@@ -61,7 +73,7 @@ class AuthService:
                     status_code=400, detail="Incorrect username or password!"
                 )
             return JWTRepo(data={"username": _username.username}).generate_token()
-        raise HTTPException(status_code=400, detail="Username not found !")
+        raise HTTPException(status_code=400, detail="Username not found!")
 
     @staticmethod
     async def forgot_password_service(
@@ -70,11 +82,11 @@ class AuthService:
         _user = await UserRepository.get_by_email(db, forgot_password.email)
 
         if _user is None:
-            raise HTTPException(status_code=400, detail="Email not found !")
+            raise HTTPException(status_code=400, detail="Email not found!")
 
         if pwd_context.verify(forgot_password.new_password, _user.hashed_password):
             raise HTTPException(
-                status_code=400, detail="The new password is the same as the old one"
+                status_code=400, detail="The new password is the same as the old one!"
             )
 
         new_hashed_password = pwd_context.hash(forgot_password.new_password)
