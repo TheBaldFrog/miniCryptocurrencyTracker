@@ -1,4 +1,8 @@
+from typing import Annotated
+
+from fastapi import Depends
 from loguru import logger
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import async_db_manager
 from app.service.coinmarketcap.cmc_http_client import (
@@ -20,3 +24,14 @@ async def get_db():
     finally:
         await db.close()
         logger.debug("Close async session")
+
+
+DBSessionDep = Annotated[AsyncSession, Depends(get_db)]
+
+
+async def commit_rollback(db: AsyncSession):
+    try:
+        await db.commit()
+    except Exception:
+        await db.rollback()
+        raise

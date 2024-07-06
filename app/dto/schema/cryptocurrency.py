@@ -17,3 +17,8 @@ class CryptocurrencySchema(BaseModel):
     name: str = Field(examples=["Bitcoin"])
     quote: Quote
     total_supply: float = Field(examples=["19719378"])
+
+
+class ResponseSchema(BaseModel):
+    detail: str
+    result: str = None  # !!!! Mod

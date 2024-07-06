@@ -1,3 +1,4 @@
+import datetime
 from typing import Annotated
 
 from fastapi import APIRouter, Depends
@@ -28,11 +29,14 @@ async def get_cryptocurrency(
 @cryptocurrencies.get("/testdb/")
 async def get_testdb(db: AsyncSession = Depends(get_db)):
     db_user = User(
-        username="fs7",
-        email="qw7",
-        first_name="fdsf",
-        last_name="sdfsdf",
+        username="2",
+        email="2",
+        first_name="1",
+        last_name="2",
         hashed_password="fsdfsddsfsdfsdfd",
+        phone_number="+393515777020",
+        sex="MALE",
+        birth=datetime.date(1900, 1, 1),
     )
     db.add(db_user)
     await db.commit()
