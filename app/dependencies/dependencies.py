@@ -17,7 +17,7 @@ def get_cmc_client() -> CMSHTTPClient:
 
 
 async def get_db():
-    db = async_db_manager.get_session()
+    db = async_db_manager.get_new_session()
     logger.debug("Open async session")
     try:
         yield db
