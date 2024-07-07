@@ -23,7 +23,7 @@ async def lifespan(app: FastAPI):
     # Start Up
     logger.info("on_start_up")
 
-    await async_db_manager.init()
+    # await async_db_manager.init()
     logger.debug("start DB")
 
     start_cmc_http_client()
