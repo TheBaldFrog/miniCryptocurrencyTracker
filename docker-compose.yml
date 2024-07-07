@@ -1,0 +1,40 @@
+version: '3'
+services:
+  dp-postgres:
+    image: postgres:16.3
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: appdbuser
+      POSTGRES_PASSWORD: appuserpass
+      POSTGRES_DB: fastapidb
+    networks:
+      - backend
+    volumes:
+      - ./db-data/:/var/lib/postgresql/data/
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+
+  fastapi-app:
+    build: .
+    command: fastapi run app/app.py
+    env_file:
+      - .env.prod
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    networks:
+      - backend
+    depends_on:
+      - dp-postgres
+
+networks:
+  backend:
+    driver: bridge
