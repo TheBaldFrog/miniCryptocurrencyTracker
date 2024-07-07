@@ -1,6 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from app.core.config import config
+from app.dto.model import Base
 
 
 class AsyncDatabaseManager:
@@ -13,6 +14,10 @@ class AsyncDatabaseManager:
 
     async def close(self):
         await self._engine.dispose()
+
+    async def init(self):
+        async with self._engine.begin() as conn:
+            await conn.run_sync(Base.metadata.create_all)
 
     def is_closed(self) -> bool:
         return self._engine is None
