@@ -1,21 +1,9 @@
 import re
+from datetime import date, datetime
 from enum import Enum
 
 from fastapi import HTTPException
-from pydantic import BaseModel, field_validator
-
-
-class UserSchema(BaseModel):
-    id: int
-    username: str
-    email: str
-    first_name: str
-    last_name: str
-    is_superuser: bool = False
-
-
-class UserPrivateSchema(UserSchema):
-    hashed_password: str
+from pydantic import BaseModel, Field, field_validator
 
 
 class Sex(str, Enum):
@@ -26,11 +14,12 @@ class Sex(str, Enum):
 class RegisterSchema(BaseModel):
 
     username: str
-    email: str
-    name: str
+    email: str = Field(default="user@mail.com")
+    first_name: str
+    last_name: str
     password: str
     phone_number: str
-    birth: str
+    birth: str = Field(default="01-01-2001")
     sex: Sex
 
     @field_validator("sex")
@@ -58,12 +47,37 @@ class ForgotPasswordSchema(BaseModel):
     new_password: str
 
 
-# schema = RegisterSchema(
-#     username="dsf",
-#     email="<EMAIL>",
-#     name="dsad",
-#     password="dsa",
-#     phone_number="+393515777020",
-#     birth="fsdf",
-#     sex="FEMALE",
-# )
+class UserProfileSchema(BaseModel):
+    id: int
+    username: str
+    email: str
+    first_name: str
+    last_name: str
+    phone_number: str
+    birth: datetime | str
+    sex: str
+    is_superuser: bool = False
+
+
+class UserPublicSchema(BaseModel):
+    id: int
+    username: str
+    first_name: str
+    last_name: str
+    sex: str
+    is_superuser: bool
+
+
+class UpdateUserSchema(BaseModel):
+    username: str
+    email: str = Field(default="user@mail.com")
+    first_name: str
+    last_name: str
+    phone_number: str
+    birth: str = Field(default="01-01-2001", title="%d-%m-%Y")
+    sex: Sex
+
+
+class UpdatePasswordSchema(BaseModel):
+    old_password: str
+    new_password: str

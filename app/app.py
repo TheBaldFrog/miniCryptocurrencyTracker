@@ -4,7 +4,12 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from loguru import logger
 
-from app.api.v1.routers import authentication_router, cryptocurrencies, user_router
+from app.api.v1.routers import (
+    admin_router,
+    authentication_router,
+    cryptocurrencies,
+    user_router,
+)
 from app.core.config import config
 from app.core.database import async_db_manager
 from app.service.coinmarketcap.cmc_http_client import (
@@ -36,6 +41,7 @@ app = FastAPI(title=config.project_name, lifespan=lifespan)
 app.include_router(cryptocurrencies)
 app.include_router(authentication_router)
 app.include_router(user_router)
+app.include_router(admin_router)
 
 
 origins = [
@@ -54,4 +60,4 @@ app.add_middleware(
 
 @app.get("/")
 def root():
-    return {"Hello": "Fastapi and React App"}
+    return {"Title": config.project_name}

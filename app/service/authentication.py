@@ -16,26 +16,13 @@ class AuthService:
     @staticmethod
     async def register_service(register: RegisterSchema, db: AsyncSession):
         # Validate email
-        try:
-            email_info = validate_email(register.email, check_deliverability=False)
-
-            normalized_email = email_info.normalized
-        except EmailNotValidError:
-            raise HTTPException(status_code=400, detail="Non valid email!")
+        normalized_email = AuthService.validate_email(register.email)
 
         # Validate phonenumbers
-        my_number = phonenumbers.parse(register.phone_number)
-        if not phonenumbers.is_valid_number(my_number):
-            raise HTTPException(status_code=400, detail="Non valid phone number!")
+        AuthService.validate_phone_number(register.phone_number)
 
         # Validate birthdate type from frontend str to date
-        try:
-            birth_date = datetime.strptime(register.birth, "%d-%m-%Y")
-        except ValueError:
-            raise HTTPException(
-                status_code=400,
-                detail="Invalid birth, date does not match format '%d-%m-%Y'",
-            )
+        birth_date = AuthService.validate_birthday(register.birth)
 
         _users = User(
             username=register.username,
@@ -90,3 +77,40 @@ class AuthService:
         _user.hashed_password = new_hashed_password
 
         await UserRepository.update(db, _user)
+
+    @staticmethod
+    def validate_email(email: str, check_deliverability=False) -> str:
+        """Raise HTTPException if email is invalid else return normalized email."""
+
+        try:
+            email_info = validate_email(email, check_deliverability=check_deliverability)
+
+            normalized_email = email_info.normalized
+        except EmailNotValidError:
+            raise HTTPException(status_code=400, detail="Invalid email!")
+
+        return normalized_email
+
+    @staticmethod
+    def validate_phone_number(phone_number: str):
+        """Raise HTTPException exception if phone number is invalid."""
+        try:
+            my_number = phonenumbers.parse(phone_number)
+        except phonenumbers.phonenumberutil.NumberParseException:
+            raise HTTPException(status_code=400, detail="Invalid phone number!")
+        if not phonenumbers.is_valid_number(my_number):
+            raise HTTPException(status_code=400, detail="Invalid phone number!")
+
+    @staticmethod
+    def validate_birthday(birthday: str) -> datetime:
+        """Raise HTTPException exception if birthday is invalid else return birthday."""
+
+        try:
+            birth_date = datetime.strptime(birthday, "%d-%m-%Y")
+        except ValueError:
+            raise HTTPException(
+                status_code=400,
+                detail="Invalid birth, date does not match format '%d-%m-%Y'",
+            )
+
+        return birth_date

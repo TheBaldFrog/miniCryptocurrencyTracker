@@ -16,7 +16,9 @@ async def register(request_body: RegisterSchema, db: DBSessionDep):
     return ResponseSchema(detail="Successfully registered")
 
 
-@authentication_router.post("/login", response_model=ResponseSchema)
+@authentication_router.post(
+    "/login", response_model=ResponseSchema, response_model_exclude_none=True
+)
 async def login(request_body: LoginSchema, db: DBSessionDep):
     token = await AuthService.logins_service(request_body, db)
     return ResponseSchema(
