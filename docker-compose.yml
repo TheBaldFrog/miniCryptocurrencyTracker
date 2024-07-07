@@ -4,23 +4,20 @@ services:
     image: postgres:16.3
     ports:
       - "5432:5432"
-    environment:
-      POSTGRES_USER: appdbuser
-      POSTGRES_PASSWORD: appuserpass
-      POSTGRES_DB: fastapidb
+    env_file: ".env"
     networks:
       - backend
-#    volumes:
-#      - ./db-data/:/var/lib/postgresql/data/
+    volumes:
+      - /tmp/postgresql:/var/lib/postgresql
+      - /tmp/postgresql/data:/var/lib/postgresql/data
     restart: on-failure
 
   fastapi-app:
     build: .
-    command: poetry run fastapi run app/app.py
+    command: >
+            sh -c "poetry run alembic upgrade head && poetry run fastapi run app/app.py"
     ports:
-      - "8000:8000"
-#    env_file:
-#      - .env
+      - "80:8000"
     restart: on-failure
     networks:
       - backend

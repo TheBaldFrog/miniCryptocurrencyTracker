@@ -12,9 +12,9 @@ env.read_env()
 class DatabaseConfig:
     """Database connection variables"""
 
-    name: str = env.str("DATABASE")
-    user: str = env.str("PGUSER")
-    passwd: str = env.str("PGPASSWORD")
+    name: str = env.str("POSTGRES_DB")
+    user: str = env.str("POSTGRES_USER")
+    passwd: str = env.str("POSTGRES_PASSWORD")
     host: str = env.str("PGHOST")
     port: int = env.int("PGPORT")
 
