@@ -44,10 +44,7 @@ app.include_router(user_router)
 app.include_router(admin_router)
 
 
-origins = [
-    "http://localhost",
-    f"http://localhost:{config.vite_port}",
-]
+origins = ["http://localhost", f"http://localhost:{config.vite_port}", "*"]
 
 app.add_middleware(
     CORSMiddleware,

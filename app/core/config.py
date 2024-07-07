@@ -16,6 +16,7 @@ class DatabaseConfig:
     user: str = env.str("PGUSER")
     passwd: str = env.str("PGPASSWORD")
     host: str = env.str("PGHOST")
+    port: int = env.int("PGPORT")
 
     driver: str = "asyncpg"
     database_system: str = "postgresql"
@@ -30,6 +31,7 @@ class DatabaseConfig:
             database=self.name,
             password=self.passwd,
             host=self.host,
+            port=self.port,
         ).render_as_string(hide_password=False)
 
 
