@@ -36,17 +36,14 @@ class AuthService:
                 status_code=400,
                 detail="Invalid birth, date does not match format '%d-%m-%Y'",
             )
-        name = register.name.strip().split()
-        first_name = name[0]
-        last_name = name[1]
 
         _users = User(
             username=register.username,
             email=normalized_email,
             hashed_password=pwd_context.hash(register.password),
             birth=birth_date,
-            first_name=first_name,
-            last_name=last_name,
+            first_name=register.first_name,
+            last_name=register.last_name,
             phone_number=register.phone_number,
             sex=register.sex,
         )
