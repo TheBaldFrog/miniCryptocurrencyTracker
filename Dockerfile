@@ -5,11 +5,12 @@ RUN pip install poetry==1.8.3
 WORKDIR /app
 
 COPY pyproject.toml poetry.lock ./
-RUN poetry install --without dev
+RUN poetry install --without dev --no-root
 
-COPY app ./app
-RUN poetry install --without dev
+COPY . .
+RUN poetry install --without dev --no-root
 
 RUN chmod 755 .
+#RUN poetry run poetry run alembic upgrade head
 
 #CMD ["fastapi", "run", "app/app.py"]
