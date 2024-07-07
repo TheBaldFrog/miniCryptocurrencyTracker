@@ -8,14 +8,13 @@ services:
     networks:
       - backend
     volumes:
-      - /tmp/postgresql:/var/lib/postgresql
-      - /tmp/postgresql/data:/var/lib/postgresql/data
+      - ./db-data/:/var/lib/postgresql/data/
     restart: on-failure
 
   fastapi-app:
     build: .
     command: >
-            sh -c "poetry run alembic upgrade head && poetry run fastapi run app/app.py"
+      sh -c "poetry run alembic upgrade head && poetry run fastapi run app/app.py"
     ports:
       - "80:8000"
     restart: on-failure
