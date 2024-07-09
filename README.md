@@ -20,3 +20,6 @@ Enter the `miniCryptocurrencyTracker` directory
    ```
 ### Demo Backend
 docs [Link](http://52.91.140.87/docs)
+
+username -> `test` <br/>
+password -> `test`
