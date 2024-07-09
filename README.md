@@ -5,7 +5,7 @@
 |---------|-------------------------------------------------------------------------------------------------------------|
 | Model   | [app/dto/model](https://github.com/TheBaldFrog/miniCryptocurrencyTracker/tree/main/app/dto/model)           |
 | View    | [app/dto/schema](https://github.com/TheBaldFrog/miniCryptocurrencyTracker/tree/main/app/dto/schema)         |
-| Control | [app/api/v1/routers](https://github.com/TheBaldFrog/miniCryptocurrencyTracker/tree/main/app/api/v1/routers) |
+| Controller | [app/api/v1/routers](https://github.com/TheBaldFrog/miniCryptocurrencyTracker/tree/main/app/api/v1/routers) |
 | Service | [app/service](https://github.com/TheBaldFrog/miniCryptocurrencyTracker/tree/main/app/service)               |
 
 ## Repository
