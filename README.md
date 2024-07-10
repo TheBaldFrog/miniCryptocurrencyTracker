@@ -24,5 +24,5 @@ docs [Link](http://52.91.140.87/docs)
 username -> `test` <br/>
 password -> `test`
 
-### Demo Frontend
+### Demo [Frontend](https://github.com/TheBaldFrog/miniCryptocurrencyTrackerFrontend)
 [link](http://3.95.246.13/)
