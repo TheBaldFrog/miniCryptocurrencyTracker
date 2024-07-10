@@ -81,3 +81,8 @@ class UpdateUserSchema(BaseModel):
 class UpdatePasswordSchema(BaseModel):
     old_password: str
     new_password: str
+
+
+class UpdatePrivilegesUserSchema(BaseModel):
+    username: str
+    is_superuser: bool
