@@ -8,9 +8,8 @@
 | Controller | [app/api/v1/routers](https://github.com/TheBaldFrog/miniCryptocurrencyTracker/tree/main/app/api/v1/routers) |
 | Service | [app/service](https://github.com/TheBaldFrog/miniCryptocurrencyTracker/tree/main/app/service)               |
 
-## Repository
+## [Repository](https://github.com/TheBaldFrog/miniCryptocurrencyTracker/tree/main/app/repository)
 Intermediary layer between an [application’s business logic](https://github.com/TheBaldFrog/miniCryptocurrencyTracker/tree/main/app/service) and data storage.
-[app/repository](https://github.com/TheBaldFrog/miniCryptocurrencyTracker/tree/main/app/repository)
 
 ### Backend
 Enter the `miniCryptocurrencyTracker` directory
