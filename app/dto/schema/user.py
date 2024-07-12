@@ -30,6 +30,14 @@ class RegisterSchema(BaseModel):
     def validate_email(cls, v):
         return v.strip()
 
+    @field_validator("first_name")
+    def validate_first_name(cls, v):
+        return v.strip()
+
+    @field_validator("last_name")
+    def validate_last_name(cls, v):
+        return v.strip()
+
     @field_validator("password")
     def validate_password(cls, v):
         return v.strip()
