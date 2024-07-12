@@ -66,5 +66,3 @@ class Config:
 
 
 config = Config()
-
-print(config.database.build_connection_str())

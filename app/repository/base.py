@@ -20,7 +20,7 @@ class BaseRepository:
 
     @classmethod
     async def get_all(cls, db: AsyncSession, skip: int = 0, limit: int = 100):
-        query = select(cls.model).offset(skip).limit(limit)
+        query = select(cls.model).order_by(cls.model.id).offset(skip).limit(limit)
         result = await db.execute(query)
         return (await db.execute(query)).scalars().all()
 

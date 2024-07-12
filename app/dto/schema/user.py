@@ -22,6 +22,26 @@ class RegisterSchema(BaseModel):
     birth: str = Field(default="01-01-2001")
     sex: Sex
 
+    @field_validator("username")
+    def validate_username(cls, v):
+        return v.strip()
+
+    @field_validator("email")
+    def validate_email(cls, v):
+        return v.strip()
+
+    @field_validator("password")
+    def validate_password(cls, v):
+        return v.strip()
+
+    @field_validator("phone_number")
+    def validate_phone_number(cls, v):
+        return v.strip()
+
+    @field_validator("birth")
+    def validate_birth(cls, v):
+        return v.strip()
+
     @field_validator("sex")
     def sex_validation(cls, v):
         if hasattr(Sex, v) is False:
@@ -76,6 +96,30 @@ class UpdateUserSchema(BaseModel):
     phone_number: str
     birth: str = Field(default="01-01-2001", title="%d-%m-%Y")
     sex: Sex
+
+    @field_validator("username")
+    def validate_username(cls, v):
+        return v.strip()
+
+    @field_validator("email")
+    def validate_email(cls, v):
+        return v.strip()
+
+    @field_validator("first_name")
+    def validate_first_name(cls, v):
+        return v.strip()
+
+    @field_validator("last_name")
+    def validate_last_name(cls, v):
+        return v.strip()
+
+    @field_validator("phone_number")
+    def phone_validation(cls, v):
+        # regex phone number
+        regex = r"^[\+]?[(]?[0-9]{4}[)]?[-\s\.]?[0-9]{4}[-\s\.]?[0-9]{4,6}$"
+        if v and not re.search(regex, v, re.I):
+            raise HTTPException(status_code=400, detail="Invalid input phone number!")
+        return v
 
 
 class UpdatePasswordSchema(BaseModel):
