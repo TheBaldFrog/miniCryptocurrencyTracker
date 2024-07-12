@@ -22,7 +22,6 @@ async def get_all_users(
     skip: int = 0,
     limit: int = 100,
     db=Depends(get_db),
-    credentials: HTTPAuthorizationCredentials = Security(JWTBearer()),
 ):
     all_users = await UserRepository.get_all(db, skip, limit)
     return all_users
