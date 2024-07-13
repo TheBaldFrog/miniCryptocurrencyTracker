@@ -3,6 +3,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 
 from app.dto.model.base import Base
 from app.dto.model.mixins import TimeMixin
+from app.dto.schema.user import Sex
 
 
 class User(TimeMixin, Base):
@@ -15,6 +16,6 @@ class User(TimeMixin, Base):
     last_name: Mapped[str]
     phone_number: Mapped[str]
     birth = mapped_column(Date)
-    sex: Mapped[str]
+    sex: Mapped[Sex]
     hashed_password: Mapped[str]
     is_superuser: Mapped[bool] = mapped_column(default=False)
