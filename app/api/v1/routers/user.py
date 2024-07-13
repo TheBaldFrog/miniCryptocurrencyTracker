@@ -4,7 +4,6 @@ from fastapi.security import HTTPAuthorizationCredentials
 from app.dependencies.dependencies import DBSessionDep, get_db
 from app.dto.schema.cryptocurrency import ResponseSchema
 from app.dto.schema.user import (
-    RegisterSchema,
     UpdatePasswordSchema,
     UpdateUserSchema,
     UserProfileSchema,
@@ -88,7 +87,7 @@ async def update_current_user(
     return ResponseSchema(detail="Successfully update data!")
 
 
-@user_router.put(
+@user_router.patch(
     "/update-password", response_model=ResponseSchema, response_model_exclude_none=True
 )
 async def update_current_user_password(

@@ -23,7 +23,7 @@ async def delete_user_by_username(
     return await AdminService.delete_user(db, token["username"], username)
 
 
-@admin_router.put(
+@admin_router.patch(
     "/update-privileges/",
     response_model_exclude_none=True,
 )
