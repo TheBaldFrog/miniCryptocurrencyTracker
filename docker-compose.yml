@@ -16,7 +16,7 @@ services:
     command: >
       sh -c "poetry run alembic upgrade head && poetry run fastapi run app/app.py --workers 4"
     ports:
-      - "80:8000"
+      - "8000:8000"
     restart: on-failure
     networks:
       - backend
