@@ -18,10 +18,10 @@ Enter the `miniCryptocurrencyTracker` directory
    docker-compose up -d
    ```
 ### Demo Backend
-docs [Link](http://44.193.26.129/docs)
+docs [Link](http://44.211.162.169:8000/docs)
 
 username -> `test` <br/>
 password -> `test`
 
 ### Demo [Frontend](https://github.com/TheBaldFrog/miniCryptocurrencyTrackerFrontend)
-[link](http://44.220.86.47/)
+[link](http://44.211.162.169/)
